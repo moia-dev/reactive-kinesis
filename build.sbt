@@ -23,10 +23,10 @@ lazy val library =
   new {
 
     object Version {
-      val scalaCheck = "1.14.0"
-      val scalaTest  = "3.0.8"
-      val jackson    = "2.9.8"
-      val akka       = "2.5.23"
+      val scalaCheck = "1.14.3"
+      val scalaTest  = "3.1.0"
+      val jackson    = "2.10.1"
+      val akka       = "2.6.1"
     }
 
     val jackson = Seq(
@@ -36,17 +36,17 @@ lazy val library =
       "com.fasterxml.jackson.core"       % "jackson-databind"        % Version.jackson % Compile,
       "com.fasterxml.jackson.core"       % "jackson-core"            % Version.jackson % Compile,
       "com.fasterxml.jackson.core"       % "jackson-annotations"     % Version.jackson % Compile,
-      "com.fasterxml.uuid"               % "java-uuid-generator"     % "3.1.5"         % Compile
+      "com.fasterxml.uuid"               % "java-uuid-generator"     % "3.2.0"         % Compile
     )
 
     val amazon = Seq(
       // TODO: Upgrade this to 1.9.x when this issue is resolved and exposed in localstack:
       // https://github.com/mhart/kinesalite/issues/59
       // 1.9.3 breaks KinesisSourceGraphStageIntegrationSpec and ConsumerProcessingManagerIntegrationSpec
-      "com.amazonaws" % "amazon-kinesis-client" % "1.11.1" % Compile
+      "com.amazonaws" % "amazon-kinesis-client" % "1.13.1" % Compile
       excludeAll (ExclusionRule(organization = "com.fasterxml.jackson.core"),
       ExclusionRule(organization = "com.fasterxml.jackson.dataformat")),
-      "com.amazonaws" % "amazon-kinesis-producer" % "0.12.11" % Compile
+      "com.amazonaws" % "amazon-kinesis-producer" % "0.14.0" % Compile
       excludeAll (ExclusionRule(organization = "com.fasterxml.jackson.core"),
       ExclusionRule(organization = "com.fasterxml.jackson.dataformat"))
     )
@@ -63,10 +63,12 @@ lazy val library =
     )
 
     val testing = Seq(
-      "org.scalatest"     %% "scalatest"    % Version.scalaTest  % "it,test",
-      "org.scalacheck"    %% "scalacheck"   % Version.scalaCheck % "it,test",
-      "com.typesafe.akka" %% "akka-testkit" % Version.akka       % "it,test",
-      "org.mockito"       % "mockito-core"  % "2.16.0"           % "it,test"
+      "org.scalatest"     %% "scalatest"       % Version.scalaTest  % "it,test",
+      "org.scalatestplus" %% "mockito-1-10"    % "3.1.0.0"          % "it,test",
+      "org.scalatestplus" %% "scalacheck-1-14" % "3.1.0.1"          % "it,test",
+      "org.scalacheck"    %% "scalacheck"      % Version.scalaCheck % "it,test",
+      "com.typesafe.akka" %% "akka-testkit"    % Version.akka       % "it,test",
+      "org.mockito"       % "mockito-core"     % "2.16.0"           % "it,test"
     )
 
     val compat = Seq(
@@ -136,7 +138,7 @@ lazy val commonSettings =
     ),
     scalacOptions in (Compile, console) ~= (_.filterNot(
       Set(
-        "-Ywarn-unused:imports",
+        // "-Ywarn-unused:imports",
         "-Xfatal-warnings"
       )
     )),
