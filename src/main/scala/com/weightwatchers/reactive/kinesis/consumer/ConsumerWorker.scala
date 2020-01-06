@@ -225,10 +225,12 @@ private[consumer] class ConsumerWorker(eventProcessor: ActorRef,
                                   previouslyReceivedHighestSeq: Option[CompoundSequenceNumber] =
                                     None) {
 
-    private val batchSequenceNumbers: collection.mutable.SortedSet[CompoundSequenceNumber] =
-      collection.mutable.SortedSet.from(expectedResponses.map(_.sequenceNumber))(
-        CompoundSequenceNumber.orderingBySeqAndSubSeq.reverse
-      )
+    private val batchSequenceNumbers: collection.mutable.SortedSet[CompoundSequenceNumber] = {
+      val builder = collection.mutable.SortedSet
+        .newBuilder[CompoundSequenceNumber](CompoundSequenceNumber.orderingBySeqAndSubSeq.reverse)
+      expectedResponses.foreach(elem => builder += elem.sequenceNumber)
+      builder.result()
+    }
 
     private val receivedResponseSeqNos: collection.mutable.SortedSet[CompoundSequenceNumber] =
       collection.mutable.SortedSet
