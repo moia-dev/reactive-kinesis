@@ -94,7 +94,7 @@ versioningSettings
 
 lazy val commonSettings =
   Seq(
-    version := "0.6.12", //automatically calculated by sbt-git
+    // version := "0.6.12", //automatically calculated by sbt-git
     //scalaVersion := "2.11.11", // taken from .travis.yml via sbt-travisci
     organization := "com.weightwatchers",
     mappings.in(Compile, packageBin) += baseDirectory.in(ThisBuild).value / "LICENSE" -> "LICENSE",
@@ -145,7 +145,6 @@ lazy val commonSettings =
     ),
     scalacOptions in (Compile, console) ~= (_.filterNot(
       Set(
-        // "-Ywarn-unused:imports",
         "-Xfatal-warnings"
       )
     )),
