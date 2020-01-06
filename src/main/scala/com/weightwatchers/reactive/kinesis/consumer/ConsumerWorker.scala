@@ -226,6 +226,7 @@ private[consumer] class ConsumerWorker(eventProcessor: ActorRef,
                                     None) {
 
     private val batchSequenceNumbers: collection.mutable.SortedSet[CompoundSequenceNumber] = {
+      // Use builder here, since this is the common denominator for scala 2.12 (apply) and 2.13 (from)
       val builder = collection.mutable.SortedSet
         .newBuilder[CompoundSequenceNumber](CompoundSequenceNumber.orderingBySeqAndSubSeq.reverse)
       expectedResponses.foreach(elem => builder += elem.sequenceNumber)
