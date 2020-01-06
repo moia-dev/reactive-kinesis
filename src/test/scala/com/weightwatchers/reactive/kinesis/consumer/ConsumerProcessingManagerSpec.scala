@@ -103,12 +103,12 @@ class ConsumerProcessingManagerSpec extends UnitTest with AkkaTest {
 
         //validate the probe received the Seq of ConsumerEvents
         val expectedMsg = ProcessEvents(
-          ArrayBuffer(toConsumerEvent(record1),
-                      toConsumerEvent(record2),
-                      toConsumerEvent(record3),
-                      toConsumerEvent(record4),
-                      toConsumerEvent(record5),
-                      toConsumerEvent(record6)),
+          Seq(toConsumerEvent(record1),
+              toConsumerEvent(record2),
+              toConsumerEvent(record3),
+              toConsumerEvent(record4),
+              toConsumerEvent(record5),
+              toConsumerEvent(record6)),
           checkpointer,
           shardId
         )

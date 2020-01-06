@@ -228,7 +228,8 @@ trait KinesisSuite
   private def createLeaseTable(applicationName: String): Unit = {
     val manager = new LeaseManager[KinesisClientLease](s"$applicationName-$TestStreamName",
                                                        dynamoClient,
-                                                       new KinesisClientLeaseSerializer(),BillingMode.PROVISIONED)
+                                                       new KinesisClientLeaseSerializer(),
+                                                       BillingMode.PROVISIONED)
     manager.createLeaseTableIfNotExists(1L, 1L)
     while (!manager.leaseTableExists()) Thread.sleep(100)
   }
